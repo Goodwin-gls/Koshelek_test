@@ -48,12 +48,37 @@ export default {
   name: "home",
   data: () => ({
     asks: [],
-    bids: []
+    bids: [],
+    ws: null,
+    limit: null
   }),
   async mounted() {
+    this.limit = this.$store.state.limit;
     let tableData = await this.$store.dispatch("fetchDepth");
-    this.asks = tableData.asks.reverse();
-    this.bids = tableData.bids.reverse();
+    this.asks = tableData.asks;
+    this.bids = tableData.bids;
+    let ws = await this.$store.dispatch("openWS");
+    this.ws = ws;
+    ws.onmessage = event => {
+      let data = event.data;
+      let dataJson = JSON.parse(data);
+      let newAsks = dataJson.a.filter(item => item[1] > 0);
+      let newBids = dataJson.b.filter(item => item[1] > 0);
+      if (newAsks.length >= this.limit) {
+        newAsks.length = this.limit;
+        this.asks = newAsks;
+      } else {
+        this.asks.length = this.limit - newAsks.length;
+        this.asks = newAsks.concat(this.asks);
+      }
+      if (newBids.length >= this.limit) {
+        newBids.length = this.limit;
+        this.bids = newBids;
+      } else {
+        this.bids.length = this.limit - newBids.length;
+        this.bids = newBids.concat(this.bids);
+      }
+    };
   }
 };
 </script>
