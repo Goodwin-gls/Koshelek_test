@@ -62,6 +62,7 @@ export default {
     ws.onmessage = event => {
       let data = event.data;
       let dataJson = JSON.parse(data);
+      console.log(dataJson);
       let newAsks = dataJson.a.filter(item => item[1] > 0);
       let newBids = dataJson.b.filter(item => item[1] > 0);
       if (newAsks.length >= this.limit) {
@@ -79,6 +80,9 @@ export default {
         this.bids = newBids.concat(this.bids);
       }
     };
+  },
+  destroyed() {
+    this.ws.close();
   }
 };
 </script>
