@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     currentSymbol: "BNBBTC",
     currentWs: null,
-    limit: 20
+    limit: 50
   },
   mutations: {
     setCurrentSymbol(state, symbol) {
