@@ -10,8 +10,11 @@
 <script>
 export default {
   data: () => ({
-    currentSymbol: "BNBBTC"
+    currentSymbol: ""
   }),
+  mounted() {
+    this.currentSymbol = this.$store.state.currentSymbol;
+  },
   watch: {
     currentSymbol() {
       this.$store.commit("setCurrentSymbol", this.currentSymbol);
