@@ -1,43 +1,47 @@
 <template>
-  <div>
-    <table>
-      <caption>
-        bids
-      </caption>
-      <thead class="thead">
-        <tr>
-          <th>Price</th>
-          <th>Amount</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) of bids" :key="index">
-          <td>{{ item[0] }}</td>
-          <td>{{ item[1] }}</td>
-          <td>{{ item[0] * item[1] }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <table>
-      <caption>
-        asks
-      </caption>
-      <thead class="thead">
-        <tr>
-          <th>Price</th>
-          <th>Amount</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) of asks" :key="index">
-          <td>{{ item[0] }}</td>
-          <td>{{ item[1] }}</td>
-          <td>{{ item[0] * item[1] }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="tables">
+    <div class="table-wrapper">
+      <table class="table">
+        <caption>
+          bids
+        </caption>
+        <thead class="thead">
+          <tr class="tr">
+            <th class="th">Price</th>
+            <th class="th">Amount</th>
+            <th class="th mobile_hidden">Total</th>
+          </tr>
+        </thead>
+        <tbody class="tbody">
+          <tr class="tr" v-for="(item, index) of bids" :key="index">
+            <td class="td">{{ item[0] }}</td>
+            <td class="td">{{ item[1] }}</td>
+            <td class="td mobile_hidden">{{ item[0] * item[1] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-wrapper">
+      <table class="table">
+        <caption>
+          asks
+        </caption>
+        <thead class="thead">
+          <tr class="tr">
+            <th class="th">Price</th>
+            <th class="th">Amount</th>
+            <th class="th mobile_hidden">Total</th>
+          </tr>
+        </thead>
+        <tbody class="tbody">
+          <tr class="tr" v-for="(item, index) of asks" :key="index">
+            <td class="th">{{ item[0] }}</td>
+            <td class="th">{{ item[1] }}</td>
+            <td class="th mobile_hidden">{{ item[0] * item[1] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -85,3 +89,62 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.tables {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.table-wrapper {
+  width: 45%;
+}
+.table {
+  height: 100%;
+  border-collapse: collapse;
+  border: 2px solid black;
+  width: 100%;
+  text-align: center;
+}
+.tbody {
+  display: block;
+  height: 400px;
+  overflow-y: scroll;
+}
+.tbody::-webkit-scrollbar {
+  width: 5px;
+}
+.tbody::-webkit-scrollbar-thumb {
+  background-color: rgba($color: #000000, $alpha: 0);
+  border-radius: 3px;
+}
+.tbody:hover::-webkit-scrollbar-thumb {
+  background-color: rgba($color: #000000, $alpha: 1);
+}
+.tr {
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+}
+.th,
+td {
+  display: block;
+  text-align: center;
+  width: 33.33%;
+}
+@media screen and (max-width: 1170px) {
+  .table-wrapper {
+    width: 70%;
+  }
+  .table-wrapper + .table-wrapper {
+    margin-top: 50px;
+  }
+}
+@media screen and (max-width: 749px) {
+  .mobile_hidden {
+    display: none;
+  }
+  .table-wrapper {
+    width: 80%;
+  }
+}
+</style>

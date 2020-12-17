@@ -13,8 +13,14 @@
 </template>
 
 <style lang="scss">
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 .link {
   color: blue;
+  margin-left: 30px;
 }
 .active {
   color: red;
